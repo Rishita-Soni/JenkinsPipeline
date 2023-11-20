@@ -2,20 +2,20 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
+        stage('Build app') {
             steps {
-                echo 'Build App'
+                checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/Rishita-Soni/JenkinsPipeline.git']])
             }
         }
-        stage('Test') {
-            steps {
-                echo 'Test App'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                echo 'Deploy App'
+        stage('Build docker image'){
+            steps{
+                script{
+                    bat 'docker build -t jenkinsjavaapp .'
+                }
             }
         }
     }
 }
+
+
+
