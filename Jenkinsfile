@@ -14,13 +14,20 @@ pipeline {
                 }
             }
         }
+        stage('Change image tag'){
+            steps{
+                script{
+                    bat 'docker tag jenkinsjavaapp rishitasoni/jenkinsjava_app:v1.0'
+                }
+            }
+        }
         stage('Push image to docker hub'){
             steps{
                 script{
                     withCredentials([string(credentialsId: 'dockerhubpwd1', variable: 'dockerhubpwd1')]) {
                     bat 'docker login -u rishitasoni -p welcome123'
                     }
-                    bat 'docker push jenkinsjavaapp:latest'
+                    bat 'docker push rishitasoni/jenkinsjava_app:v1.0'
                 }
             }
         }
