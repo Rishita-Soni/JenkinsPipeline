@@ -14,6 +14,16 @@ pipeline {
                 }
             }
         }
+        stage('Push image to docker hub'){
+            steps{
+                script{
+                    withCredentials([string(credentialsId: 'dockerhubpwd', variable: 'dockerhubpwd')]) {
+                    bat 'docker login -u rishitasoni -p ${dockerhubpwd}'
+                    }
+                    bat 'docker push jenkinsjavaapp'
+                }
+            }
+        }
     }
 }
 
